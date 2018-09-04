@@ -353,17 +353,29 @@ Proof.
       - reflexivity. }
 Qed.
 
+Theorem andb_true_elim2 : forall b c : bool,
+  andb b c = true -> c = true.
+Proof.
+  intros b c.
+  destruct b.
+    - simpl. intros H.
+      rewrite -> H.
+      reflexivity.
+    - simpl. destruct c.
+      + intros H.
+        reflexivity.
+      + intros H.
+        rewrite -> H.
+        reflexivity.
+Qed.
 
-
-
-
-
-
-
-
-
-
-
+Theorem zero_nbeq_plus_1 : forall n : nat,
+  beq_nat 0 (n + 1) = false.
+Proof.
+  intros n. destruct n as [|n'].
+  - simpl. reflexivity.
+  - simpl. reflexivity.
+Qed.
 
 
 
