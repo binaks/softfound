@@ -425,10 +425,31 @@ Proof.
     + reflexivity.
 Qed.
 
+Inductive bin : Type :=
+  | Z : bin
+  | P : bin -> bin
+  | I : bin -> bin.
 
+Fixpoint pred (b : bin) : bin :=
+  match b with
+    | Z => Z
+    | P b' => I (pred b')
+    | I b' => P b'
+  end.
 
+Fixpoint incr (b : bin) : bin :=
+  match b with
+    | Z => I Z
+    | P b' => I b'
+    | I b' => P (incr b')
+  end.
 
-
+Fixpoint bin_to_nat (b : bin) : nat :=
+  match b with
+  | Z => O
+  | P b' => S S (bin_to_nat (pred b'))
+  | I b' => 
+  end.
 
 
 
