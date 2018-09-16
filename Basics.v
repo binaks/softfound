@@ -447,15 +447,6 @@ Fixpoint incr (b : bin) : bin :=
 Fixpoint bin_to_nat (b : bin) : nat :=
   match b with
   | Z => O
-  | P b' => S S (bin_to_nat (pred b'))
-  | I b' => 
+  | P b' => S (S O) * (bin_to_nat b')
+  | I b' => S (S O) * (bin_to_nat b') + S O
   end.
-
-
-
-
-
-
-
-
-
