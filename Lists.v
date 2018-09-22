@@ -78,6 +78,17 @@ Definition mylist1 := 1 :: (2 :: (3 :: nil)).
 Definition mylist2 := 1 :: 2 :: 3 :: nil.
 Definition mylist3 := [1;2;3].
 
+Fixpoint repeat (n count : nat) : natlist :=
+  match count with
+  | O => nil
+  | S count' => n :: (repeat n count')
+  end.
+
+Fixpoint length (l:natlist) : nat :=
+  match l with
+  | nil => O
+  | h :: t => S (length t)
+  end.
 
 
 
