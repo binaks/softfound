@@ -260,6 +260,43 @@ Example test_remove_one4:
   count 5 (remove_one 5 [2;1;5;4;5;1;4]) = 1.
 Proof. reflexivity. Qed.
 
+Fixpoint remove_all (v:nat) (s:bag) : bag :=
+  match s with
+  | nil => nil
+  | h :: t => match beq_nat h v with
+              | true => (remove_all v  t)
+              | false => h :: (remove_all v t)
+              end
+  end.
+
+Example test_remove_all1: count 5 (remove_all 5 [2;1;5;4;1]) = 0.
+Proof. reflexivity. Qed.
+
+Example test_remove_all2: count 5 (remove_all 5 [2;1;4;1]) = 0.
+Proof. reflexivity. Qed.
+
+Example test_remove_all3: count 4 (remove_all 5 [2;1;4;5;1;4]) = 2.
+Proof. reflexivity. Qed.
+
+Example test_remove_all4: count 5 (remove_all 5 [2;1;5;4;5;1;4;5;1;4]) = 0.
+Proof. reflexivity. Qed.
+
+Fixpoint subset (s_1:bag) (s_2:bag) : bool :=
+  match s_1 with
+  | nil => true
+  | h :: t => match member h s_2 with
+              | true => subset t (remove_one h s_2)
+              | false => false
+              end
+  end.
+
+Example test_subset1: subset [1;2] [2;1;4;1] = true.
+Proof. reflexivity. Qed.
+
+Example test_subset2: subset [1;2;2] [2;1;4;1] = false.
+Proof. reflexivity. Qed.
+
+
 
 
 
