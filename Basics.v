@@ -430,10 +430,10 @@ Inductive bin : Type :=
   | P : bin -> bin
   | I : bin -> bin.
 
-Fixpoint pred (b : bin) : bin :=
+Fixpoint pred_bin (b : bin) : bin :=
   match b with
     | Z => Z
-    | P b' => I (pred b')
+    | P b' => I (pred_bin b')
     | I b' => P b'
   end.
 

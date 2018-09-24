@@ -86,8 +86,8 @@ Fixpoint repeat (n count : nat) : natlist :=
 
 Fixpoint length (l:natlist) : nat :=
   match l with
-  | nil => O
-  | h :: t => S (length t)
+  | nil => 0
+  | h :: t => 1 + (length t)
   end.
 
 Fixpoint app (l_1 l_2 : natlist) : natlist :=
@@ -112,7 +112,7 @@ Definition hd (default:nat) (l:natlist) : nat :=
   | h :: t => h
   end.
 
-Definition t1 (l:natlist) : natlist :=
+Definition tl (l:natlist) : natlist :=
   match l with
   | nil => nil
   | h :: t => t
@@ -122,7 +122,7 @@ Example test_hd_1: hd 0 [1;2;3] = 1.
 Proof. reflexivity. Qed.
 Example test_hd_2: hd 0 [] = 0.
 Proof. reflexivity. Qed.
-Example test_t1: t1 [1;2;3] = [2;3].
+Example test_t1: tl [1;2;3] = [2;3].
 Proof. reflexivity. Qed.
 
 Fixpoint nonzeros (l:natlist) : natlist :=
@@ -296,7 +296,12 @@ Proof. reflexivity. Qed.
 Example test_subset2: subset [1;2;2] [2;1;4;1] = false.
 Proof. reflexivity. Qed.
 
+Theorem nil_app : forall l:natlist,
+  [] ++ l = l.
+Proof. reflexivity. Qed.
 
+Theorem tl_length_pred : forall l:natlist,
+  pred (length l) = length (tl l).
 
 
 
