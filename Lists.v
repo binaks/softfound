@@ -302,8 +302,45 @@ Proof. reflexivity. Qed.
 
 Theorem tl_length_pred : forall l:natlist,
   pred (length l) = length (tl l).
+Proof.
+  intros l. destruct l as [| n l'].
+  - reflexivity.
+  - reflexivity. Qed.
 
+Theorem app_assoc : forall l_1 l_2 l_3 : natlist,
+  (l_1 ++ l_2) ++ l_3 = l_1 ++ (l_2 ++ l_3).
+Proof.
+  intros l_1 l_2 l_3.
+  induction l_1 as [| n l_1' IHl1'].
+  - reflexivity.
+  - simpl. rewrite -> IHl1'. reflexivity. Qed.
 
+Fixpoint rev (l:natlist) : natlist :=
+  match l with
+  | nil => nil
+  | h :: t => (rev t) ++ [h]
+  end.
+
+Example test_rev1: rev [1;2;3] = [3;2;1].
+Proof. reflexivity. Qed.
+
+Example test_rev2: rev nil = nil.
+Proof. reflexivity. Qed.
+
+Theorem app_length : forall l_1 l_2 : natlist,
+  length (l_1 ++ l_2) = (length l_1) + (length l_2).
+Proof.
+  intros l_1 l_2. induction l_1 as [| n l_1' IHl1'].
+  - reflexivity.
+  - simpl. rewrite -> IHl1'. reflexivity. Qed.
+
+Theorem rev_length : forall l : natlist,
+  length (rev l) = length l.
+Proof.
+  intros l. induction l as [| n l' IHl1'].
+  - reflexivity.
+  - simpl. rewrite -> app_length, plus_comm.
+    rewrite -> IHl1'. simpl. reflexivity. Qed.
 
 
 
