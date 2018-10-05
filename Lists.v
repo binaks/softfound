@@ -342,6 +342,51 @@ Proof.
   - simpl. rewrite -> app_length, plus_comm.
     rewrite -> IHl1'. simpl. reflexivity. Qed.
 
+Theorem app_nil_r : forall l : natlist,
+  l ++ [] = l.
+Proof.
+  intros l.
+  induction l as [| n l' IHl'].
+  - reflexivity.
+  - simpl.
+    rewrite -> IHl'.
+    reflexivity.
+  Qed.
+
+Theorem rev_app_distr : forall l_1 l_2 : natlist,
+  rev (l_1 ++ l_2) = rev l_2 ++ rev l_1.
+Proof.
+  intros l_1 l_2.
+  induction l_1 as [| n l_1' IHl1'].
+  - simpl.
+    rewrite -> app_nil_r.
+    reflexivity.
+  - simpl.
+    rewrite -> IHl1'.
+    rewrite -> app_assoc.
+    reflexivity.
+  Qed.
+
+Theorem rev_involutive : forall l : natlist,
+  rev (rev l) = l.
+Proof.
+  intros l.
+  induction l as [| n l' IHl'].
+  - reflexivity.
+  - simpl. 
+    rewrite -> rev_app_distr.
+    simpl.
+    rewrite -> IHl'.
+    reflexivity.
+  Qed.
+
+Theorem app_assoc4 : forall l_1 l_2 l_3 l_4 : natlist,
+  l_1 ++ (l_2 ++ (l_3 ++ l_4)) = ((l_1 ++ l_2) ++ l_3) ++ l_4.
+Proof.
+  intros l_1 l_2 l_3 l_4.
+  rewrite -> app_assoc, app_assoc.
+  reflexivity.
+Qed.
 
 
 
