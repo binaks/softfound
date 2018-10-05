@@ -388,6 +388,40 @@ Proof.
   reflexivity.
 Qed.
 
+Lemma nonzeros_app : forall l_1 l_2 : natlist,
+  nonzeros (l_1 ++ l_2) = (nonzeros l_1) ++ (nonzeros l_2).
+Proof.
+  intros l_1 l_2.
+  induction l_1 as [|n l_1' IHl1'].
+  - reflexivity.
+  - simpl.
+    rewrite -> IHl1'.
+    destruct beq_nat.
+    + reflexivity.
+    + reflexivity.
+  Qed.
+
+Definition beq_natlist (l_1 l_2 : natlist) : bool :=
+  (subset l_1 l_2) && (subset l_2 l_1).
+
+Example test_beq_natlist1 :
+  (beq_natlist nil nil = true).
+Proof.
+  reflexivity.
+Qed.
+
+Example test_beq_natlist2 :
+  beq_natlist [1;2;3] [1;2;3] = true.
+Proof.
+  reflexivity.
+Qed.
+
+Example test_beq_natlist3 :
+  beq_natlist [1;2;3] [1;2;4] = false.
+Proof.
+  reflexivity.
+Qed.
+
 
 
 
