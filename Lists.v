@@ -401,8 +401,17 @@ Proof.
     + reflexivity.
   Qed.
 
-Definition beq_natlist (l_1 l_2 : natlist) : bool :=
-  (subset l_1 l_2) && (subset l_2 l_1).
+Fixpoint beq_natlist (l_1 l_2 : natlist) : bool :=
+   match l_1 with
+    | nil => match l_2 with
+             | nil => true
+             | _ => false
+             end
+    | h1 :: t1 => match l_2 with
+                  | nil => false
+                  | h2 :: t2 => beq_nat h1 h2 && beq_natlist t1 t2
+                  end
+    end.
 
 Example test_beq_natlist1 :
   (beq_natlist nil nil = true).
@@ -421,6 +430,15 @@ Example test_beq_natlist3 :
 Proof.
   reflexivity.
 Qed.
+
+Theorem beq_nat_refl : forall l:natlist,
+  true = beq_natlist l l.
+Proof.
+  intros l.
+  induction l as [| n l' IHl'].
+  - reflexivity.
+  - simpl.
+    
 
 
 
