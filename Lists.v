@@ -431,14 +431,27 @@ Proof.
   reflexivity.
 Qed.
 
-Theorem beq_nat_refl : forall l:natlist,
+Theorem beq_nat_refl : forall n : nat,
+  true = beq_nat n n.
+Proof.
+  intros n. induction n as [|n' IHn'].
+  - simpl. reflexivity.
+  - simpl. rewrite <- IHn'. reflexivity.
+Qed.
+
+Theorem beq_natlist_refl : forall l:natlist,
   true = beq_natlist l l.
 Proof.
   intros l.
   induction l as [| n l' IHl'].
   - reflexivity.
   - simpl.
-    
+    rewrite <- IHl'.
+    rewrite <- beq_nat_refl.
+    reflexivity.
+Qed.
+
+
 
 
 
