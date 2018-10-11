@@ -451,6 +451,24 @@ Proof.
     reflexivity.
 Qed.
 
+Theorem count_member_nonzero : forall s:bag,
+  leb 1 (count 1 (1 :: s)) = true.
+Proof.
+  intros s.
+  reflexivity.
+Qed.
+
+Theorem ble_n_Sn : forall n,
+  leb n (S n) = true.
+Proof.
+  intros n.
+  induction n as [| n' IHn'].
+  - reflexivity.
+  - simpl.
+    rewrite -> IHn'.
+    reflexivity.
+Qed.
+
 
 
 
